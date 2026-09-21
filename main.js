@@ -1,5 +1,5 @@
 /* ============================================================
-   魏增知 ・ 官方網站
+   肌極工作室 ・ 官方網站
    - 「STUDIO」與「COACHES」是要換成真實資料的地方
    ============================================================ */
 'use strict';
@@ -13,7 +13,7 @@ const STUDIO = {
 
 const COACHES = [
   {
-    id: 'stephen', name: 'Stephen', role: '肌力・體態教練',
+    id: 'steven', name: 'Steven', role: '肌力・體態教練',
     tags: ['重量訓練', '體態雕塑', '基礎肌力'],
     bio: '以循序漸進的方式，帶妳建立正確的動作與長期習慣，讓力量與線條一起進步。',
   },
@@ -29,7 +29,7 @@ const GOALS = [
   { id: 'muscle', label: '增肌力量' },
   { id: 'posture', label: '體態矯正' },
   { id: 'recover', label: '體能恢復' },
-  { id: 'massage', label: '運動按摩' },
+  { id: 'massage', label: '放鬆與舒緩服務' },
   { id: 'other', label: '其他' },
 ];
 
@@ -178,9 +178,9 @@ document.addEventListener('click', e => {
 const wipe = $('#wipe');
 const VIEWS = ['home', 'massage', 'consult'];
 const TITLES = {
-  home: '魏增知｜女性私人健身工作室',
-  massage: '運動按摩｜魏增知',
-  consult: '健身諮詢預約｜魏增知',
+  home: '肌極工作室｜女性私人健身',
+  massage: '放鬆與舒緩服務｜肌極工作室',
+  consult: '健身諮詢預約｜肌極工作室',
 };
 let busy = false;
 let pending = null;
@@ -448,7 +448,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && !doneModal.hidden) 
 $('#copyBtn').addEventListener('click', async e => {
   const btn = e.currentTarget;
   try {
-    await navigator.clipboard.writeText(`【魏增知】預約資訊\n${lastReceipt}`);
+    await navigator.clipboard.writeText(`【肌極工作室】預約資訊\n${lastReceipt}`);
     btn.textContent = '已複製 ✓';
   } catch {
     btn.textContent = '請手動複製上方內容';

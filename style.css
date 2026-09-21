@@ -1,4 +1,4 @@
-/* ========== 魏增知 ・ Design tokens ========== */
+/* ========== 肌極工作室 ・ Design tokens ========== */
 :root {
   --bg: #09090b;
   --bg2: #101014;
@@ -145,6 +145,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .hero-title { margin: 18px 0 24px; font-weight: 900; font-size: clamp(52px, 9.6vw, 128px); line-height: 1.08; letter-spacing: .01em; }
 .hero-title .line { display: block; }
+.hero-title .line.tag { margin-top: .12em; font-size: .38em; font-weight: 700; letter-spacing: .12em; color: var(--text); }
 .hero-sub { max-width: 30em; font-size: clamp(16px, 1.7vw, 20px); color: #cfcfd6; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
 .center .hero-cta { justify-content: center; }
