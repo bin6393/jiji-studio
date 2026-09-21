@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>魏增知｜女性私人健身工作室</title>
+<meta name="description" content="魏增知女性私人健身工作室：一對一私人教練、健身諮詢預約與運動按摩。">
+<meta name="theme-color" content="#09090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800;1,900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 轉場遮罩 -->
+<div class="wipe" id="wipe" aria-hidden="true"><span>魏增知</span></div>
+
+<!-- 導覽列 -->
+<header class="nav" id="nav">
+  <a class="brand" href="#/" aria-label="魏增知 首頁">魏增知<small>WEI ZENG ZHI</small></a>
+  <nav class="nav-links" aria-label="主選單">
+    <a href="#/" data-nav="home">首頁</a>
+    <a href="#/massage" data-nav="massage">運動按摩</a>
+    <a href="#/consult" data-nav="consult">健身諮詢</a>
+  </nav>
+  <a class="btn btn-sm" href="#/consult">立即預約</a>
+</header>
+
+<main>
+
+<!-- ============================== 首頁 ============================== -->
+<section class="view active" id="view-home" data-view="home">
+
+  <!-- Hero -->
+  <div class="hero" id="hero">
+    <div class="hero-orb o1"></div>
+    <div class="hero-orb o2"></div>
+    <div class="hero-bgtext" aria-hidden="true">STRONG</div>
+
+    <svg class="hero-bell" viewBox="0 0 600 200" aria-hidden="true">
+      <defs>
+        <linearGradient id="gPlate" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ff7a45"/><stop offset="1" stop-color="#ff2d87"/>
+        </linearGradient>
+        <linearGradient id="gBar" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e9e9ef"/><stop offset="1" stop-color="#6b6b76"/>
+        </linearGradient>
+      </defs>
+      <rect x="110" y="91" width="380" height="18" rx="9" fill="url(#gBar)"/>
+      <rect x="84" y="62" width="30" height="76" rx="8" fill="#1d1d24" stroke="#3a3a45"/>
+      <rect x="118" y="28" width="44" height="144" rx="14" fill="url(#gPlate)"/>
+      <rect x="486" y="62" width="30" height="76" rx="8" fill="#1d1d24" stroke="#3a3a45"/>
+      <rect x="438" y="28" width="44" height="144" rx="14" fill="url(#gPlate)"/>
+    </svg>
+
+    <div class="hero-content">
+      <p class="eyebrow" data-reveal>WOMEN'S PRIVATE TRAINING STUDIO</p>
+      <h1 class="hero-title">
+        <span class="line" data-reveal style="--d:.08s">力量，</span>
+        <span class="line" data-reveal style="--d:.16s">是妳最美的</span>
+        <span class="line grad" data-reveal style="--d:.24s">樣子。</span>
+      </h1>
+      <p class="hero-sub" data-reveal style="--d:.34s">魏增知女性私人健身工作室。一對一教練陪伴，從體態、力量到運動後的身體恢復，全面照顧。</p>
+      <div class="hero-cta" data-reveal style="--d:.44s">
+        <a class="btn" href="#/consult">健身諮詢・預約 <i class="arr">→</i></a>
+        <a class="btn btn-ghost" href="#/massage">運動按摩 <i class="arr">→</i></a>
+      </div>
+    </div>
+
+    <button class="scroll-cue" type="button" data-scroll="#statement" aria-label="向下捲動">
+      <span></span>
+    </button>
+  </div>
+
+  <!-- 跑馬燈 -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>STRONG</span><span>FIERCE</span><span>FREE</span><span>STRONG</span><span>FIERCE</span><span>FREE</span>
+      <span>STRONG</span><span>FIERCE</span><span>FREE</span><span>STRONG</span><span>FIERCE</span><span>FREE</span>
+    </div>
+  </div>
+
+  <!-- 理念：文字隨捲動點亮 -->
+  <div class="lit" id="statement">
+    <div class="lit-stick">
+      <p class="lit-text" id="litText">我們相信，訓練不該是壓力，而是一種被好好對待的過程。一對一的陪伴、量身打造的課表，再加上專業的運動按摩，讓妳越練越有力量，也越來越自在。</p>
+    </div>
+  </div>
+
+  <!-- 三步驟：固定畫面 + 捲動切換 -->
+  <div class="story" id="story">
+    <div class="story-stick">
+      <div class="story-ring">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="100" cy="100" r="88" class="ring-bg"/>
+          <circle cx="100" cy="100" r="88" class="ring-fg" id="ringFg"/>
+        </svg>
+        <div class="ring-num" id="ringNum">01</div>
+      </div>
+      <div class="story-steps">
+        <article class="step on">
+          <p class="eyebrow">STEP 01 ・ 評估</p>
+          <h2>先看見<br>妳的身體。</h2>
+          <p>透過健身諮詢，了解妳的目標、生活型態與身體狀況，教練與妳一起訂出真正做得到的計畫。</p>
+        </article>
+        <article class="step">
+          <p class="eyebrow">STEP 02 ・ 訓練</p>
+          <h2>一對一，<br>量身打造。</h2>
+          <p>每一堂課都由專屬教練全程陪練，動作、強度、節奏都依妳的進度調整，安全、有效，也不會孤單。</p>
+        </article>
+        <article class="step">
+          <p class="eyebrow">STEP 03 ・ 恢復</p>
+          <h2>練完，<br>也要好好放鬆。</h2>
+          <p>運動按摩幫助肌肉修復、緩解痠痛與緊繃，讓身體在下一次訓練時，狀態更好。</p>
+        </article>
+      </div>
+      <div class="story-bar"><i id="storyBar"></i></div>
+    </div>
+  </div>
+
+  <!-- 服務入口 -->
+  <div class="sec" id="services">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>SERVICES</p>
+      <h2 class="sec-title" data-reveal style="--d:.06s">選擇妳需要的服務。</h2>
+
+      <div class="cards2">
+        <a class="svc" href="#/massage" data-reveal style="--d:.1s">
+          <span class="svc-idx">01</span>
+          <span class="svc-glow"></span>
+          <h3>運動按摩</h3>
+          <p>針對運動族群的放鬆與修復，舒緩訓練後的痠痛與緊繃。</p>
+          <span class="svc-go">了解更多 <i class="arr">→</i></span>
+        </a>
+        <a class="svc svc-hot" href="#/consult" data-reveal style="--d:.2s">
+          <span class="svc-idx">02</span>
+          <span class="svc-glow"></span>
+          <h3>健身諮詢</h3>
+          <p>與教練聊聊妳的目標，並直接線上預約 Stephen 或 Ber。</p>
+          <span class="svc-go">前往預約 <i class="arr">→</i></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 教練 -->
+  <div class="sec sec-dark" id="coaches">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>COACHES</p>
+      <h2 class="sec-title" data-reveal style="--d:.06s">認識妳的教練。</h2>
+      <div class="cards2" id="coachCards"></div>
+    </div>
+  </div>
+
+  <!-- 結尾 CTA -->
+  <div class="sec cta-end">
+    <div class="wrap center">
+      <h2 class="big" data-reveal>準備好了嗎？<br><span class="grad">從一次諮詢開始。</span></h2>
+      <div class="hero-cta" data-reveal style="--d:.12s">
+        <a class="btn" href="#/consult">預約健身諮詢 <i class="arr">→</i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 運動按摩 ============================== -->
+<section class="view" id="view-massage" data-view="massage">
+  <div class="page-hero">
+    <div class="hero-orb o1"></div>
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>SPORTS MASSAGE</p>
+      <h1 class="page-title" data-reveal style="--d:.08s">運動按摩<br><span class="grad">練得好，也要放得好。</span></h1>
+      <p class="page-sub" data-reveal style="--d:.16s">針對運動與訓練族群設計的放鬆與修復服務，由了解訓練的專業人員為妳處理肌肉與筋膜的緊繃。</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>PROGRAMS</p>
+      <h2 class="sec-title" data-reveal style="--d:.06s">按摩項目</h2>
+      <div class="grid4">
+        <article class="mcard" data-reveal style="--d:.05s">
+          <span class="mnum">01</span>
+          <h3>運動放鬆按摩</h3>
+          <p>整體肌群放鬆，降低訓練後的疲勞與僵硬感。</p>
+          <div class="chips"><span>30 分</span><span>60 分</span><span>90 分</span></div>
+        </article>
+        <article class="mcard" data-reveal style="--d:.12s">
+          <span class="mnum">02</span>
+          <h3>深層筋膜放鬆</h3>
+          <p>針對緊繃、沾黏的筋膜與痠痛點，改善活動度。</p>
+          <div class="chips"><span>60 分</span><span>90 分</span></div>
+        </article>
+        <article class="mcard" data-reveal style="--d:.19s">
+          <span class="mnum">03</span>
+          <h3>訓練後修復</h3>
+          <p>高強度訓練或體能課後的快速恢復，幫助肌肉修復。</p>
+          <div class="chips"><span>30 分</span><span>60 分</span></div>
+        </article>
+        <article class="mcard" data-reveal style="--d:.26s">
+          <span class="mnum">04</span>
+          <h3>久坐痠痛舒緩</h3>
+          <p>針對肩頸、下背與髖部的日常緊繃，改善姿勢負擔。</p>
+          <div class="chips"><span>30 分</span><span>60 分</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec sec-dark">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>WHO IT'S FOR</p>
+      <h2 class="sec-title" data-reveal style="--d:.06s">適合這樣的妳。</h2>
+      <ul class="ticks">
+        <li data-reveal style="--d:.05s">訓練後常感到痠痛、緊繃，想加速恢復</li>
+        <li data-reveal style="--d:.10s">長時間久坐，肩頸、下背或髖部不舒服</li>
+        <li data-reveal style="--d:.15s">想提升活動度，讓動作做得更順暢</li>
+        <li data-reveal style="--d:.20s">賽事或高強度課程前後的身體調整</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec cta-end">
+    <div class="wrap center">
+      <h2 class="big" data-reveal>想了解適合的方案？<br><span class="grad">先和教練聊聊。</span></h2>
+      <p class="page-sub" data-reveal style="--d:.1s">預約健身諮詢時勾選「運動按摩」，教練會依妳的狀況給建議。</p>
+      <div class="hero-cta" data-reveal style="--d:.18s">
+        <a class="btn" href="#/consult?goal=massage">預約諮詢並詢問按摩 <i class="arr">→</i></a>
+        <a class="btn btn-ghost" href="#/">回首頁</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 健身諮詢 / 預約 ============================== -->
+<section class="view" id="view-consult" data-view="consult">
+  <div class="page-hero compact">
+    <div class="hero-orb o2"></div>
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>FITNESS CONSULTATION</p>
+      <h1 class="page-title" data-reveal style="--d:.08s">健身諮詢<br><span class="grad">預約。</span></h1>
+      <p class="page-sub" data-reveal style="--d:.16s">選擇教練、日期與時段，留下聯絡方式，我們會與妳確認。</p>
+    </div>
+  </div>
+
+  <div class="sec book-sec">
+    <div class="wrap book">
+      <form class="book-form" id="bookForm" novalidate>
+
+        <fieldset class="blk" data-reveal>
+          <legend><b>1</b>選擇教練</legend>
+          <div class="coach-pick" id="coachPick" role="radiogroup" aria-label="選擇教練"></div>
+        </fieldset>
+
+        <fieldset class="blk" data-reveal>
+          <legend><b>2</b>選擇日期</legend>
+          <div class="dates" id="dates" role="radiogroup" aria-label="選擇日期"></div>
+        </fieldset>
+
+        <fieldset class="blk" data-reveal>
+          <legend><b>3</b>選擇時段</legend>
+          <div class="slots" id="slots" role="radiogroup" aria-label="選擇時段"></div>
+          <p class="hint" id="slotHint">請先選擇教練與日期。</p>
+        </fieldset>
+
+        <fieldset class="blk" data-reveal>
+          <legend><b>4</b>妳的資料</legend>
+          <div class="fields">
+            <label class="field">
+              <span>姓名</span>
+              <input type="text" id="fName" autocomplete="name" placeholder="請輸入姓名" required>
+              <em class="err" id="eName"></em>
+            </label>
+            <label class="field">
+              <span>手機</span>
+              <input type="tel" id="fPhone" autocomplete="tel" inputmode="tel" placeholder="例：0912345678" required>
+              <em class="err" id="ePhone"></em>
+            </label>
+          </div>
+          <div class="field">
+            <span>想諮詢的方向（可複選）</span>
+            <div class="goal-chips" id="goals"></div>
+          </div>
+          <label class="field">
+            <span>備註（選填）</span>
+            <textarea id="fNote" rows="3" placeholder="例：有舊傷、想針對的部位、方便的聯絡時段…"></textarea>
+          </label>
+        </fieldset>
+      </form>
+
+      <!-- 預約摘要 -->
+      <aside class="summary" id="summary" data-reveal>
+        <h3>預約摘要</h3>
+        <dl>
+          <div><dt>教練</dt><dd id="sCoach">尚未選擇</dd></div>
+          <div><dt>日期</dt><dd id="sDate">尚未選擇</dd></div>
+          <div><dt>時段</dt><dd id="sTime">尚未選擇</dd></div>
+          <div><dt>姓名</dt><dd id="sName">—</dd></div>
+        </dl>
+        <button class="btn btn-block" type="submit" form="bookForm" id="submitBtn" disabled>確認預約</button>
+        <p class="hint" id="submitHint">請完成以上步驟。</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 頁尾 -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div class="brand">魏增知<small>WEI ZENG ZHI</small></div>
+      <p class="muted">女性私人健身工作室・運動按摩</p>
+    </div>
+    <ul class="foot-info" id="footInfo"></ul>
+    <nav class="foot-links" aria-label="頁尾選單">
+      <a href="#/massage">運動按摩</a>
+      <a href="#/consult">健身諮詢</a>
+    </nav>
+  </div>
+  <p class="copy">© <span id="year"></span> 魏增知. All rights reserved.</p>
+</footer>
+
+<!-- 預約成功 -->
+<div class="modal" id="done" role="dialog" aria-modal="true" aria-labelledby="doneTitle" hidden>
+  <div class="modal-card">
+    <svg class="check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+    <h3 id="doneTitle">預約已送出</h3>
+    <p class="muted">我們會盡快與妳聯絡確認。以下是妳的預約資訊：</p>
+    <pre class="receipt" id="receipt"></pre>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" type="button" id="copyBtn">複製預約資訊</button>
+      <button class="btn" type="button" id="doneHome">回到首頁</button>
+    </div>
+    <button class="modal-x" type="button" id="doneClose" aria-label="關閉">×</button>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
