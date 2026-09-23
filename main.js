@@ -123,17 +123,6 @@ let currentStep = -1;
 let currentView = 'home';
 let ticking = false;
 
-// 元素的位置/高度只在版面真的變動時（載入、轉向、鍵盤收合…）量一次，
-// 捲動當下完全不再讀取版面，避免手機捲動時邊寫樣式邊讀版面造成的頓挫、抖動。
-const geo = { heroH: 0, litTop: 0, litH: 0, storyTop: 0, storyH: 0 };
-function measure() {
-  geo.heroH = hero.offsetHeight;
-  geo.litTop = litSection.offsetTop;
-  geo.litH = litSection.offsetHeight;
-  geo.storyTop = story.offsetTop;
-  geo.storyH = story.offsetHeight;
-}
-
 // 把理念文字拆成單字，捲動時逐字點亮（中文沒有空白斷詞，所以逐字處理）
 (function splitWords() {
   const text = litText.textContent.trim();
@@ -142,30 +131,27 @@ function measure() {
   words = $$('.w', litText);
 })();
 
-function progressFromCache(top, height) {
-  return clamp((scrollY - top) / (height - innerHeight));
+function progressOf(el) {
+  const r = el.getBoundingClientRect();
+  return clamp(-r.top / (r.height - innerHeight));
 }
 
 function update() {
   ticking = false;
   const y = scrollY;
-  const dy = y - lastY;
 
   // 導覽列：捲動後出現毛玻璃，往下捲隱藏、往上捲顯示
-  // 只在位移超過一點雜訊範圍時才切換，避免手機捲動時的微小抖動讓導覽列閃爍
   nav.classList.toggle('solid', y > 30);
-  if (Math.abs(dy) > 4) {
-    nav.classList.toggle('hide', dy > 0 && y > 240);
-    lastY = y;
-  }
+  nav.classList.toggle('hide', y > lastY && y > 240);
+  lastY = y;
 
   if (currentView !== 'home') return;
 
   // Hero 視差
-  hero.style.setProperty('--p', clamp(y / geo.heroH).toFixed(4));
+  hero.style.setProperty('--p', clamp(y / hero.offsetHeight).toFixed(4));
 
   // 文字逐字點亮
-  const lp = progressFromCache(geo.litTop, geo.litH);
+  const lp = progressOf(litSection);
   const n = words.length;
   const span = 6;
   for (let i = 0; i < n; i++) {
@@ -174,7 +160,7 @@ function update() {
   }
 
   // 三步驟
-  const sp = progressFromCache(geo.storyTop, geo.storyH);
+  const sp = progressOf(story);
   const idx = Math.min(steps.length - 1, Math.floor(sp * steps.length));
   ringFg.style.strokeDashoffset = (RING_LEN * (1 - sp)).toFixed(1);
   storyBar.style.transform = `scaleX(${sp.toFixed(4)})`;
@@ -187,17 +173,8 @@ function update() {
 function requestUpdate() {
   if (!ticking) { ticking = true; requestAnimationFrame(update); }
 }
-function requestRemeasure() {
-  measure();
-  requestUpdate();
-}
 addEventListener('scroll', requestUpdate, { passive: true });
-// 螢幕尺寸真的改變時才重新量版面：手機轉向、網址列自動收合展開都會觸發 resize
-addEventListener('resize', requestRemeasure);
-addEventListener('load', requestRemeasure);
-// Google Fonts 是非同步載入的，字體真正套用的那一刻上方文字排版會微調，
-// 下面區塊的實際位置也會跟著移動，所以字體就緒後要再量一次，快取的位置才會準
-document.fonts?.ready?.then(requestRemeasure).catch(() => {});
+addEventListener('resize', requestUpdate);
 
 // 「向下捲動」按鈕
 document.addEventListener('click', e => {
@@ -315,5 +292,4 @@ function scrollToCoach(coachId) {
 renderCoachCards();
 renderCoachDetail();
 renderFooter();
-measure();
 navigate(true);
