@@ -64,7 +64,7 @@ function renderCoachCards() {
       <h3>${c.name}</h3>
       <p class="bio">${c.bio}</p>
       <div class="chips">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>
-      <a class="btn btn-sm" href="#/consult?coach=${c.id}">預約 ${c.name} <i class="arr">→</i></a>
+      <a class="btn btn-sm" href="#/consult?coach=${c.id}">認識 ${c.name} <i class="arr">→</i></a>
     </article>`).join('');
 }
 
