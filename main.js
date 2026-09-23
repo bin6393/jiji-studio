@@ -11,16 +11,20 @@ const STUDIO = {
   hours: '（請填入營業時間）',
 };
 
+// photo：教練照片檔案路徑，放進 coaches/ 資料夾（例如 coaches/steven.jpg）即可自動顯示；
+//        沒有檔案時會自動顯示姓名字首當作預設圖。certs：證照／資歷，還沒拿到資料前先留白提示。
 const COACHES = [
   {
-    id: 'steven', name: 'Steven', role: '肌力・體態教練',
+    id: 'steven', name: 'Steven', role: '肌力・體態教練', photo: 'coaches/steven.jpg',
     tags: ['重量訓練', '體態雕塑', '基礎肌力', '放鬆與舒緩服務'],
     bio: '以循序漸進的方式，帶您建立正確的動作與長期習慣，讓力量與線條一起進步。',
+    certs: ['（教練資歷／證照，待補充）'],
   },
   {
-    id: 'ber', name: 'Ber', role: '減脂・恢復教練',
+    id: 'ber', name: 'Ber', role: '減脂・恢復教練', photo: 'coaches/ber.jpg',
     tags: ['減脂塑形', '功能性訓練', '運動恢復', '放鬆與舒緩服務'],
     bio: '從日常體能與生活節奏出發，設計您做得到、也做得久的訓練計畫。',
+    certs: ['（教練資歷／證照，待補充）'],
   },
 ];
 
@@ -64,7 +68,32 @@ function renderCoachCards() {
       <h3>${c.name}</h3>
       <p class="bio">${c.bio}</p>
       <div class="chips">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>
-      <a class="btn btn-sm" href="#/consult?coach=${c.id}">認識 ${c.name} <i class="arr">→</i></a>
+      <a class="btn btn-sm" href="#/coaches?coach=${c.id}">認識 ${c.name} <i class="arr">→</i></a>
+    </article>`).join('');
+}
+
+/* ============================================================
+   認識教練頁：每位教練的完整介紹
+   ============================================================ */
+function renderCoachDetail() {
+  $('#coachDetail').innerHTML = COACHES.map((c, i) => `
+    <article class="cd" id="coach-${c.id}" data-reveal style="--d:${0.1 + i * 0.12}s">
+      <div class="cd-photo">
+        <span class="cd-fallback" aria-hidden="true">${c.name[0]}</span>
+        <img src="${c.photo}" alt="${c.name} 教練照片" loading="lazy" onerror="this.remove()">
+      </div>
+      <div class="cd-info">
+        <p class="role">${c.role}</p>
+        <h2>${c.name}</h2>
+        <p class="bio">${c.bio}</p>
+        <div class="chips">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>
+        ${c.certs?.length ? `
+        <div class="cd-certs">
+          <h4>專業資歷</h4>
+          <ul>${c.certs.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>` : ''}
+        <a class="btn" href="#/consult?coach=${c.id}">預約諮詢 ${c.name} <i class="arr">→</i></a>
+      </div>
     </article>`).join('');
 }
 
@@ -159,10 +188,11 @@ document.addEventListener('click', e => {
    #/  #/massage  #/consult?coach=ber&goal=massage
    ============================================================ */
 const wipe = $('#wipe');
-const VIEWS = ['home', 'massage', 'consult'];
+const VIEWS = ['home', 'massage', 'coaches', 'consult'];
 const TITLES = {
   home: '肌極工作室｜女性私人健身',
   massage: '放鬆與舒緩服務｜肌極工作室',
+  coaches: '認識教練｜肌極工作室',
   consult: '健身諮詢預約｜肌極工作室',
 };
 let busy = false;
@@ -186,6 +216,7 @@ function showView(name, params) {
   nav.classList.remove('hide');
   armReveals($(`#view-${name}`));
   if (name === 'consult') loadConsultForm(params);
+  if (name === 'coaches') scrollToCoach(params.get('coach'));
   currentStep = -1;
   update();
 }
@@ -249,9 +280,16 @@ function loadConsultForm(params) {
   gformOpen.href = buildFormSrc(params, false);
 }
 
+// 從連結帶入指定教練：#/coaches?coach=ber → 直接捲到該教練的介紹
+function scrollToCoach(coachId) {
+  const el = coachId && $(`#coach-${coachId}`);
+  if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: 'auto', block: 'start' }));
+}
+
 /* ============================================================
    啟動
    ============================================================ */
 renderCoachCards();
+renderCoachDetail();
 renderFooter();
 navigate(true);

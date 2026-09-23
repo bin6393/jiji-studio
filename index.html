@@ -21,6 +21,7 @@
   <a class="brand" href="#/" aria-label="肌極工作室 首頁">肌極工作室<small>JIJI STUDIO</small></a>
   <nav class="nav-links" aria-label="主選單">
     <a href="#/" data-nav="home">首頁</a>
+    <a href="#/coaches" data-nav="coaches">認識教練</a>
     <a href="#/consult" data-nav="consult">健身諮詢</a>
     <a href="#/massage" data-nav="massage">放鬆與舒緩服務</a>
   </nav>
@@ -177,31 +178,30 @@
   <div class="sec">
     <div class="wrap">
       <p class="eyebrow" data-reveal>PROGRAMS</p>
-      <h2 class="sec-title" data-reveal style="--d:.06s">服務項目</h2>
+      <div class="sec-title-row" data-reveal style="--d:.06s">
+        <h2 class="sec-title">服務項目</h2>
+        <span class="duration-note">單節課 60 分鐘</span>
+      </div>
       <div class="grid4">
         <article class="mcard" data-reveal style="--d:.05s">
           <span class="mnum">01</span>
           <h3>全身放鬆舒緩</h3>
           <p>以徒手方式整體放鬆肌群，降低訓練後的疲勞與僵硬感。</p>
-          <div class="chips"><span>30 分</span><span>60 分</span><span>90 分</span></div>
         </article>
         <article class="mcard" data-reveal style="--d:.12s">
           <span class="mnum">02</span>
           <h3>深層筋膜放鬆</h3>
           <p>以筋膜刀工具針對緊繃、沾黏的筋膜與痠痛點，改善活動度。</p>
-          <div class="chips"><span>60 分</span><span>90 分</span></div>
         </article>
         <article class="mcard" data-reveal style="--d:.19s">
           <span class="mnum">03</span>
           <h3>訓練後修復</h3>
           <p>高強度訓練或體能課後的快速恢復，幫助肌肉修復。</p>
-          <div class="chips"><span>30 分</span><span>60 分</span></div>
         </article>
         <article class="mcard" data-reveal style="--d:.26s">
           <span class="mnum">04</span>
           <h3>久坐痠痛舒緩</h3>
           <p>針對肩頸、下背與髖部的日常緊繃，改善姿勢負擔。</p>
-          <div class="chips"><span>30 分</span><span>60 分</span></div>
         </article>
       </div>
     </div>
@@ -228,6 +228,24 @@
         <a class="btn" href="#/consult?goal=massage">預約諮詢，了解放鬆與舒緩服務 <i class="arr">→</i></a>
         <a class="btn btn-ghost" href="#/">回首頁</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 認識教練 ============================== -->
+<section class="view" id="view-coaches" data-view="coaches">
+  <div class="page-hero">
+    <div class="hero-orb o1"></div>
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>COACHES</p>
+      <h1 class="page-title" data-reveal style="--d:.08s">認識<br><span class="grad">您的教練。</span></h1>
+      <p class="page-sub" data-reveal style="--d:.16s">兩位教練，各自擅長的方向不同，一起聊聊哪一位最適合您現在的目標。</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div id="coachDetail"></div>
     </div>
   </div>
 </section>
@@ -264,6 +282,7 @@
     </div>
     <ul class="foot-info" id="footInfo"></ul>
     <nav class="foot-links" aria-label="頁尾選單">
+      <a href="#/coaches">認識教練</a>
       <a href="#/consult">健身諮詢</a>
       <a href="#/massage">放鬆與舒緩服務</a>
     </nav>

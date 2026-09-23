@@ -205,6 +205,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .sec { padding: clamp(80px, 12vw, 160px) 0; position: relative; }
 .sec-dark { background: var(--bg2); }
 .sec-title { margin-top: 10px; font-weight: 900; font-size: clamp(36px, 6vw, 76px); line-height: 1.15; }
+.sec-title-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; }
+.duration-note {
+  padding: 7px 18px; border-radius: 99px; border: 1.5px solid var(--line); background: var(--bg2);
+  font-size: 14px; font-weight: 700; color: #d0d0d6; white-space: nowrap;
+}
 .big { font-weight: 900; font-size: clamp(38px, 7vw, 92px); line-height: 1.15; }
 .cards2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 52px; }
 
@@ -244,6 +249,33 @@ ul { margin: 0; padding: 0; list-style: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips span { padding: 5px 14px; font-size: 13px; border-radius: 99px; border: 1px solid var(--line); color: #d8d8de; background: rgba(255, 255, 255, .04); }
 .coach .btn { align-self: flex-start; margin-top: 8px; }
+
+/* 認識教練頁：完整介紹卡 */
+.cd {
+  display: grid; grid-template-columns: 340px 1fr; gap: 48px; align-items: start;
+  padding: 56px 0; border-bottom: 1px solid var(--line);
+}
+.cd:last-child { border-bottom: 0; padding-bottom: 0; }
+.cd:first-child { padding-top: 0; }
+.cd-photo {
+  position: relative; aspect-ratio: 3 / 4; border-radius: 28px; overflow: hidden;
+  background: linear-gradient(160deg, var(--surface), var(--bg2)); display: grid; place-items: center;
+  border: 1px solid var(--line);
+}
+.cd-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cd-fallback {
+  font-family: var(--display); font-style: italic; font-weight: 900; font-size: clamp(90px, 12vw, 160px);
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.cd-info { display: flex; flex-direction: column; gap: 16px; }
+.cd-info .role { font-weight: 700; color: var(--a1); letter-spacing: .1em; font-size: 14px; }
+.cd-info h2 { font-family: var(--display); font-style: italic; font-weight: 900; font-size: clamp(44px, 5.6vw, 68px); line-height: 1; }
+.cd-info .bio { color: #c6c6ce; max-width: 34em; font-size: clamp(16px, 1.5vw, 18px); }
+.cd-certs h4 { font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.cd-certs ul { display: grid; gap: 8px; }
+.cd-certs li { position: relative; padding-left: 18px; font-size: 15px; color: #d8d8de; }
+.cd-certs li::before { content: ""; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--a1); }
+.cd-info .btn { align-self: flex-start; margin-top: 8px; }
 
 /* 結尾 CTA */
 .cta-end { text-align: center; overflow: hidden; }
@@ -407,6 +439,8 @@ input.bad { border-color: #ff4d5e; }
   .step h2 { font-size: clamp(32px, 9vw, 52px); }
   .hero-bell { width: 80vw; top: 62%; right: -18vw; opacity: .5; }
   .foot-in { grid-template-columns: 1fr; gap: 26px; }
+  .cd { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .cd-photo { aspect-ratio: 4 / 3; max-width: 320px; }
 }
 @media (max-width: 720px) {
   .nav-links { display: none; }
