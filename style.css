@@ -443,6 +443,9 @@ input.bad { border-color: #ff4d5e; }
   .cd-photo { aspect-ratio: 4 / 3; max-width: 320px; }
 }
 @media (max-width: 720px) {
+  /* 模糊毛玻璃在手機上邊捲動邊即時運算很吃效能，容易造成頓挫；
+     手機改用不透明底色，視覺接近、但捲動時完全不用重算模糊 */
+  .nav.solid { background: #0c0c0f; -webkit-backdrop-filter: none; backdrop-filter: none; }
   .nav-links { display: none; }
   .brand small { display: none; }
   .cards2 { grid-template-columns: 1fr; }
