@@ -24,18 +24,10 @@ const COACHES = [
   },
 ];
 
-const GOALS = [
-  { id: 'fatloss', label: '減脂塑形' },
-  { id: 'muscle', label: '增肌力量' },
-  { id: 'posture', label: '體態矯正' },
-  { id: 'recover', label: '體能恢復' },
-  { id: 'massage', label: '放鬆與舒緩服務' },
-  { id: 'other', label: '其他' },
-];
-
-const TIMES = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
-const DAYS_AHEAD = 14;
-const STORE_KEY = 'wzz_bookings_v1';
+// 健身諮詢頁內嵌的 Google 表單（回覆會自動寄到表單擁有者信箱，並可連結 Google 試算表）
+const GFORM_ID = '1FAIpQLSfdv10wPhHXLqQmfGU9Xld2O3-WJLb_I3J317aU8ZJ2-Go7tw';
+const GFORM_ENTRY = { coach: 'entry.1372673715', goal: 'entry.162615366' };
+const GFORM_COACH_LABEL = { steven: 'Steven', ber: 'Ber' };
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -44,15 +36,6 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- 小工具 ---------- */
 const pad = n => String(n).padStart(2, '0');
-const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
-
-function loadBookings() {
-  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch { return []; }
-}
-function saveBooking(b) {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify([...loadBookings(), b])); } catch { /* 隱私模式等情況 */ }
-}
 
 /* ============================================================
    進場動畫（IntersectionObserver）
@@ -202,7 +185,7 @@ function showView(name, params) {
   lastY = 0;
   nav.classList.remove('hide');
   armReveals($(`#view-${name}`));
-  if (name === 'consult') applyConsultParams(params);
+  if (name === 'consult') loadConsultForm(params);
   currentStep = -1;
   update();
 }
@@ -245,225 +228,30 @@ document.addEventListener('click', e => {
 });
 
 /* ============================================================
-   預約表單
+   健身諮詢表單（內嵌 Google 表單）
+   從連結帶入預設值：#/consult?coach=ber&goal=massage
+   會自動預先勾選教練 / 諮詢方向，使用者送出時仍可自行修改。
    ============================================================ */
-const form = $('#bookForm');
-const state = { coach: null, date: null, time: null, goals: new Set() };
-const dom = {
-  coachPick: $('#coachPick'), dates: $('#dates'), slots: $('#slots'), slotHint: $('#slotHint'),
-  goals: $('#goals'), name: $('#fName'), phone: $('#fPhone'), note: $('#fNote'),
-  eName: $('#eName'), ePhone: $('#ePhone'), submit: $('#submitBtn'), submitHint: $('#submitHint'),
-  sCoach: $('#sCoach'), sDate: $('#sDate'), sTime: $('#sTime'), sName: $('#sName'),
-};
-const coachById = id => COACHES.find(c => c.id === id);
+const gform = $('#gform');
+const gformOpen = $('#gformOpen');
 
-function radioButtons(container) { return $$('[role="radio"]', container); }
-function setChecked(container, el) {
-  radioButtons(container).forEach(b => {
-    b.setAttribute('aria-checked', String(b === el));
-    b.tabIndex = b === el ? 0 : -1;
-  });
-}
-// 方向鍵切換（radiogroup 的鍵盤操作）
-function enableArrowNav(container) {
-  container.addEventListener('keydown', e => {
-    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
-    const list = radioButtons(container).filter(b => !b.disabled);
-    const i = list.indexOf(document.activeElement);
-    if (i < 0) return;
-    e.preventDefault();
-    const next = list[(i + (['ArrowLeft', 'ArrowUp'].includes(e.key) ? -1 : 1) + list.length) % list.length];
-    next.focus(); next.click();
-  });
+function buildFormSrc(params, embedded) {
+  const url = new URL(`https://docs.google.com/forms/d/e/${GFORM_ID}/viewform`);
+  if (embedded) url.searchParams.set('embedded', 'true');
+  const coachLabel = GFORM_COACH_LABEL[params.get('coach')];
+  if (coachLabel) url.searchParams.set(GFORM_ENTRY.coach, coachLabel);
+  if (params.get('goal') === 'massage') url.searchParams.set(GFORM_ENTRY.goal, '運動按摩');
+  return url.toString();
 }
 
-function buildCoachPick() {
-  dom.coachPick.innerHTML = COACHES.map(c => `
-    <button type="button" class="pick" role="radio" aria-checked="false" tabindex="0" data-id="${c.id}">
-      <i class="ck"></i>
-      <span class="nm">${c.name}</span>
-      <span class="rl">${c.role}</span>
-    </button>`).join('');
-  dom.coachPick.addEventListener('click', e => {
-    const b = e.target.closest('.pick'); if (!b) return;
-    state.coach = b.dataset.id; state.time = null;
-    setChecked(dom.coachPick, b);
-    renderSlots(); renderSummary();
-  });
-  enableArrowNav(dom.coachPick);
+function loadConsultForm(params) {
+  gform.src = buildFormSrc(params, true);
+  gformOpen.href = buildFormSrc(params, false);
 }
-
-function buildDates() {
-  const today = new Date();
-  dom.dates.innerHTML = Array.from({ length: DAYS_AHEAD }, (_, i) => {
-    const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
-    const label = i === 0 ? '今天' : i === 1 ? '明天' : `${d.getMonth() + 1}月`;
-    return `<button type="button" class="date" role="radio" aria-checked="false" tabindex="0" data-date="${ymd(d)}">
-      <small>週${WEEK[d.getDay()]}</small><strong>${d.getDate()}</strong><span>${label}</span></button>`;
-  }).join('');
-  dom.dates.addEventListener('click', e => {
-    const b = e.target.closest('.date'); if (!b) return;
-    state.date = b.dataset.date; state.time = null;
-    setChecked(dom.dates, b);
-    renderSlots(); renderSummary();
-  });
-  enableArrowNav(dom.dates);
-}
-
-function renderSlots() {
-  const { coach, date } = state;
-  if (!coach || !date) {
-    dom.slots.innerHTML = '';
-    dom.slotHint.textContent = '請先選擇教練與日期。';
-    return;
-  }
-  const now = new Date();
-  const isToday = date === ymd(now);
-  const taken = new Set(loadBookings().filter(b => b.coach === coach && b.date === date).map(b => b.time));
-  dom.slots.innerHTML = TIMES.map(t => {
-    const past = isToday && Number(t.slice(0, 2)) <= now.getHours();
-    const off = past || taken.has(t);
-    return `<button type="button" class="slot" role="radio" aria-checked="false" tabindex="0" data-time="${t}" ${off ? 'disabled' : ''}>${t}</button>`;
-  }).join('');
-  const free = dom.slots.querySelectorAll('.slot:not(:disabled)').length;
-  dom.slotHint.textContent = free ? `${coachById(coach).name} 於此日可預約 ${free} 個時段。` : '此日已無可預約時段，請改選其他日期。';
-}
-dom.slots.addEventListener('click', e => {
-  const b = e.target.closest('.slot'); if (!b || b.disabled) return;
-  state.time = b.dataset.time;
-  setChecked(dom.slots, b);
-  renderSummary();
-});
-enableArrowNav(dom.slots);
-
-function buildGoals() {
-  dom.goals.innerHTML = GOALS.map(g => `<button type="button" class="goal" aria-pressed="false" data-id="${g.id}">${g.label}</button>`).join('');
-  dom.goals.addEventListener('click', e => {
-    const b = e.target.closest('.goal'); if (!b) return;
-    const on = !state.goals.has(b.dataset.id);
-    on ? state.goals.add(b.dataset.id) : state.goals.delete(b.dataset.id);
-    b.setAttribute('aria-pressed', String(on));
-  });
-}
-
-const validName = v => v.trim().length >= 2;
-const validPhone = v => /^[0-9+\-\s]{8,15}$/.test(v.trim());
-
-function fmtDate(s) {
-  if (!s) return '';
-  const [y, m, d] = s.split('-').map(Number);
-  return `${m} 月 ${d} 日（週${WEEK[new Date(y, m - 1, d).getDay()]}）`;
-}
-function setSummary(el, text) {
-  el.textContent = text || '尚未選擇';
-  el.classList.toggle('empty', !text);
-  el.classList.toggle('ok', !!text);
-}
-
-function renderSummary() {
-  setSummary(dom.sCoach, state.coach && coachById(state.coach).name);
-  setSummary(dom.sDate, fmtDate(state.date));
-  setSummary(dom.sTime, state.time);
-  dom.sName.textContent = dom.name.value.trim() || '—';
-
-  const missing = [];
-  if (!state.coach) missing.push('教練');
-  if (!state.date) missing.push('日期');
-  if (!state.time) missing.push('時段');
-  if (!validName(dom.name.value)) missing.push('姓名');
-  if (!validPhone(dom.phone.value)) missing.push('手機');
-  dom.submit.disabled = missing.length > 0;
-  dom.submitHint.textContent = missing.length ? `尚需完成：${missing.join('、')}` : '資料齊全，可以送出囉。';
-}
-
-dom.name.addEventListener('input', () => { dom.name.classList.remove('bad'); dom.eName.textContent = ''; renderSummary(); });
-dom.phone.addEventListener('input', () => { dom.phone.classList.remove('bad'); dom.ePhone.textContent = ''; renderSummary(); });
-dom.name.addEventListener('blur', () => {
-  if (dom.name.value && !validName(dom.name.value)) { dom.name.classList.add('bad'); dom.eName.textContent = '請輸入至少 2 個字'; }
-});
-dom.phone.addEventListener('blur', () => {
-  if (dom.phone.value && !validPhone(dom.phone.value)) { dom.phone.classList.add('bad'); dom.ePhone.textContent = '請輸入正確的手機號碼'; }
-});
-
-// 從連結帶入預設值：#/consult?coach=ber&goal=massage
-function applyConsultParams(params) {
-  const coachId = params.get('coach');
-  if (coachById(coachId)) {
-    const btn = $(`.pick[data-id="${coachId}"]`);
-    state.coach = coachId; state.time = null;
-    setChecked(dom.coachPick, btn);
-  }
-  const goal = params.get('goal');
-  const gBtn = goal && $(`.goal[data-id="${goal}"]`);
-  if (gBtn && !state.goals.has(goal)) { state.goals.add(goal); gBtn.setAttribute('aria-pressed', 'true'); }
-  renderSlots(); renderSummary();
-}
-
-/* ---------- 送出 ---------- */
-const doneModal = $('#done');
-let lastReceipt = '';
-
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  renderSummary();
-  if (dom.submit.disabled) return;
-
-  const booking = {
-    coach: state.coach, date: state.date, time: state.time,
-    name: dom.name.value.trim(), phone: dom.phone.value.trim(),
-    goals: [...state.goals], note: dom.note.value.trim(), createdAt: new Date().toISOString(),
-  };
-  saveBooking(booking);
-
-  const goalText = booking.goals.map(id => GOALS.find(g => g.id === id).label).join('、') || '—';
-  lastReceipt = [
-    `教練：${coachById(booking.coach).name}`,
-    `日期：${fmtDate(booking.date)}`,
-    `時段：${booking.time}`,
-    `姓名：${booking.name}`,
-    `手機：${booking.phone}`,
-    `方向：${goalText}`,
-    booking.note ? `備註：${booking.note}` : null,
-  ].filter(Boolean).join('\n');
-  $('#receipt').textContent = lastReceipt;
-
-  doneModal.hidden = false;
-  document.body.classList.add('locked');
-  $('#doneHome').focus();
-});
-
-function closeModal() { doneModal.hidden = true; document.body.classList.remove('locked'); }
-function resetForm() {
-  state.coach = state.date = state.time = null; state.goals.clear();
-  form.reset();
-  radioButtons(dom.coachPick).concat(radioButtons(dom.dates)).forEach(b => b.setAttribute('aria-checked', 'false'));
-  $$('.goal').forEach(b => b.setAttribute('aria-pressed', 'false'));
-  renderSlots(); renderSummary();
-}
-
-$('#doneClose').addEventListener('click', () => { closeModal(); resetForm(); });
-$('#doneHome').addEventListener('click', () => { closeModal(); resetForm(); location.hash = '#/'; });
-doneModal.addEventListener('click', e => { if (e.target === doneModal) { closeModal(); resetForm(); } });
-addEventListener('keydown', e => { if (e.key === 'Escape' && !doneModal.hidden) { closeModal(); resetForm(); } });
-$('#copyBtn').addEventListener('click', async e => {
-  const btn = e.currentTarget;
-  try {
-    await navigator.clipboard.writeText(`【肌極工作室】預約資訊\n${lastReceipt}`);
-    btn.textContent = '已複製 ✓';
-  } catch {
-    btn.textContent = '請手動複製上方內容';
-  }
-  setTimeout(() => { btn.textContent = '複製預約資訊'; }, 2000);
-});
 
 /* ============================================================
    啟動
    ============================================================ */
 renderCoachCards();
 renderFooter();
-buildCoachPick();
-buildDates();
-buildGoals();
-renderSlots();
-renderSummary();
 navigate(true);

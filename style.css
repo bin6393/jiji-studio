@@ -283,8 +283,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   border: solid #fff; border-width: 0 2.5px 2.5px 0;
 }
 
-/* ========== 預約 ========== */
-.book-sec { padding-top: 40px; }
+/* ========== 預約：內嵌 Google 表單 ========== */
+.book-sec { padding-top: 40px; padding-bottom: clamp(70px, 10vw, 120px); }
+.gform-card {
+  border-radius: 28px; overflow: hidden; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, .6);
+}
+.gform { display: block; width: 100%; border: 0; background: #fff; }
+.gform-alt { margin-top: 18px; text-align: center; }
+.gform-alt a { color: var(--a1); font-weight: 700; }
+.gform-alt a:hover { text-decoration: underline; }
+
 .book { display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
 .book-form { display: grid; gap: 22px; min-width: 0; }
 .blk { margin: 0; padding: 30px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); min-width: 0; }

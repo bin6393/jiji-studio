@@ -239,67 +239,16 @@
     <div class="wrap">
       <p class="eyebrow" data-reveal>FITNESS CONSULTATION</p>
       <h1 class="page-title" data-reveal style="--d:.08s">健身諮詢<br><span class="grad">預約。</span></h1>
-      <p class="page-sub" data-reveal style="--d:.16s">選擇教練、日期與時段，留下聯絡方式，我們會與您確認。</p>
+      <p class="page-sub" data-reveal style="--d:.16s">填寫下方表單留下您的資料，教練會盡快與您聯繫，確認方便的時間。</p>
     </div>
   </div>
 
   <div class="sec book-sec">
-    <div class="wrap book">
-      <form class="book-form" id="bookForm" novalidate>
-
-        <fieldset class="blk" data-reveal>
-          <legend><b>1</b>選擇教練</legend>
-          <div class="coach-pick" id="coachPick" role="radiogroup" aria-label="選擇教練"></div>
-        </fieldset>
-
-        <fieldset class="blk" data-reveal>
-          <legend><b>2</b>選擇日期</legend>
-          <div class="dates" id="dates" role="radiogroup" aria-label="選擇日期"></div>
-        </fieldset>
-
-        <fieldset class="blk" data-reveal>
-          <legend><b>3</b>選擇時段</legend>
-          <div class="slots" id="slots" role="radiogroup" aria-label="選擇時段"></div>
-          <p class="hint" id="slotHint">請先選擇教練與日期。</p>
-        </fieldset>
-
-        <fieldset class="blk" data-reveal>
-          <legend><b>4</b>您的資料</legend>
-          <div class="fields">
-            <label class="field">
-              <span>姓名</span>
-              <input type="text" id="fName" autocomplete="name" placeholder="請輸入姓名" required>
-              <em class="err" id="eName"></em>
-            </label>
-            <label class="field">
-              <span>手機</span>
-              <input type="tel" id="fPhone" autocomplete="tel" inputmode="tel" placeholder="例：0912345678" required>
-              <em class="err" id="ePhone"></em>
-            </label>
-          </div>
-          <div class="field">
-            <span>想諮詢的方向（可複選）</span>
-            <div class="goal-chips" id="goals"></div>
-          </div>
-          <label class="field">
-            <span>備註（選填）</span>
-            <textarea id="fNote" rows="3" placeholder="例：有舊傷、想針對的部位、方便的聯絡時段…"></textarea>
-          </label>
-        </fieldset>
-      </form>
-
-      <!-- 預約摘要 -->
-      <aside class="summary" id="summary" data-reveal>
-        <h3>預約摘要</h3>
-        <dl>
-          <div><dt>教練</dt><dd id="sCoach">尚未選擇</dd></div>
-          <div><dt>日期</dt><dd id="sDate">尚未選擇</dd></div>
-          <div><dt>時段</dt><dd id="sTime">尚未選擇</dd></div>
-          <div><dt>姓名</dt><dd id="sName">—</dd></div>
-        </dl>
-        <button class="btn btn-block" type="submit" form="bookForm" id="submitBtn" disabled>確認預約</button>
-        <p class="hint" id="submitHint">請完成以上步驟。</p>
-      </aside>
+    <div class="wrap">
+      <div class="gform-card" data-reveal>
+        <iframe class="gform" id="gform" src="" width="100%" height="1150" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" title="肌極工作室 健身諮詢預約表單">載入中…</iframe>
+      </div>
+      <p class="hint gform-alt">表單跑不出來嗎？<a id="gformOpen" href="#" target="_blank" rel="noopener">點此在新分頁開啟 ↗</a></p>
     </div>
   </div>
 </section>
@@ -321,21 +270,6 @@
   </div>
   <p class="copy">© <span id="year"></span> 肌極工作室. All rights reserved.</p>
 </footer>
-
-<!-- 預約成功 -->
-<div class="modal" id="done" role="dialog" aria-modal="true" aria-labelledby="doneTitle" hidden>
-  <div class="modal-card">
-    <svg class="check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
-    <h3 id="doneTitle">預約已送出</h3>
-    <p class="muted">我們會盡快與您聯絡確認。以下是您的預約資訊：</p>
-    <pre class="receipt" id="receipt"></pre>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" type="button" id="copyBtn">複製預約資訊</button>
-      <button class="btn" type="button" id="doneHome">回到首頁</button>
-    </div>
-    <button class="modal-x" type="button" id="doneClose" aria-label="關閉">×</button>
-  </div>
-</div>
 
 <script src="main.js"></script>
 </body>
