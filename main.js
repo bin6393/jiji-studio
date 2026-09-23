@@ -195,6 +195,9 @@ addEventListener('scroll', requestUpdate, { passive: true });
 // 螢幕尺寸真的改變時才重新量版面：手機轉向、網址列自動收合展開都會觸發 resize
 addEventListener('resize', requestRemeasure);
 addEventListener('load', requestRemeasure);
+// Google Fonts 是非同步載入的，字體真正套用的那一刻上方文字排版會微調，
+// 下面區塊的實際位置也會跟著移動，所以字體就緒後要再量一次，快取的位置才會準
+document.fonts?.ready?.then(requestRemeasure).catch(() => {});
 
 // 「向下捲動」按鈕
 document.addEventListener('click', e => {
