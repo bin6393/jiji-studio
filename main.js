@@ -7,8 +7,8 @@
 const STUDIO = {
   phone: '（請填入電話）',
   line: '（請填入 LINE ID）',
-  address: '（請填入地址）',
-  hours: '（請填入營業時間）',
+  address: '台中市神岡區社口里中山路742巷7號',
+  hours: '09:00–21:00',
 };
 
 // photo：教練照片檔案路徑，放進 coaches/ 資料夾（例如 coaches/steven.jpg）即可自動顯示；
